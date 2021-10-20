@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Simple friction log script to mail things to yourself or an alias
+
+EMAIL="you@you.com"
+
+if [[ $# -gt 0 ]] ; then
+	echo "No arguments required"
+	exit 1
+fi
+
+which nano 1>/dev/null 2>&1
+
+if [[ $? -eq 0 ]] ; then
+
+nano /tmp/fric.$$
+
+else
+
+vi /tmp/fric.$$
+
+fi
+
+cat /tmp/fric.$$ | mail -s "Friction log" $EMAIL
+
+rm /tmp/fric.$$
+
+echo "friction log sent"
